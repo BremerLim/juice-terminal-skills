@@ -28,7 +28,7 @@ for any stock.
 
 ## Free vs. the full bundle
 
-| | **Free Edition** (this repo) | **Juice Terminal Investor Skills** ([get it](GUMROAD_URL)) |
+| | **Free Edition** (this repo) | **Juice Terminal Investor Skills** ([get it](https://juiceterminal.gumroad.com/l/juice-terminal-investor-skills)) |
 |---|:---:|:---:|
 | **The Judge**: 0-100 scorecard, every input sourced | ✅ | ✅ |
 | **investor-setup**: guided one-time setup | ✅ | ✅ |
