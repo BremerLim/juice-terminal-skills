@@ -1,0 +1,18 @@
+{
+  "name": "juice-terminal-skills",
+  "description": "Juice Terminal Investor Skills, Free Edition: The Judge scores any US stock 0-100 on five weighted pillars (quality, trend, forward growth, valuation, catalysts and risk), every input sourced from SEC filings and free market data. The full bundle adds The Scout, The Mind Reader, The Sniper and The Time Traveller.",
+  "version": "1.5.0",
+  "author": {
+    "name": "Juice Terminal"
+  },
+  "homepage": "https://github.com/BremerLim/juice-terminal-skills",
+  "repository": "https://github.com/BremerLim/juice-terminal-skills",
+  "keywords": [
+    "claude-skills",
+    "investing",
+    "stock-scorecard",
+    "sec-edgar",
+    "valuation",
+    "quality-stocks"
+  ]
+}

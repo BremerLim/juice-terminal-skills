@@ -1,0 +1,7 @@
+{
+  "systemMessage": "Juice Terminal Investor Skills (Free Edition) is installed: The Judge is ready. Say \"set up investor skills\" to get started (about 2 minutes, once).",
+  "hookSpecificOutput": {
+    "hookEventName": "SessionStart",
+    "additionalContext": "The user has installed the free edition of Juice Terminal Investor Skills but has not finished setup yet. It has The Judge (the-judge), which scores a stock 0-100 on five weighted pillars from SEC filings and free market data, and investor-setup, which does the setup. In your first reply this session, before anything else: welcome them in two or three short, plain lines; say The Judge scores any US stock from free SEC filings and market data; say a one-time setup takes about two minutes (it checks Python and the data sources and asks for a name and email that the SEC requires); and offer to start it now with the investor-setup skill. If their first message asks for something else, help with it and mention setup in one line. Do not repeat this welcome later in the session."
+  }
+}

@@ -1,0 +1,57 @@
+import os
+import re
+import unittest
+
+from _helpers import Offline, ik, load, run
+
+sc = load("the-judge", "scorecard")
+
+
+class Reports(unittest.TestCase):
+    """Every skill writes a self-contained report page that follows the artifact page rules."""
+
+    def check_page(self, path, title):
+        with open(path, encoding="utf-8") as f:
+            html = f.read()
+        head = html[:8192]
+        self.assertIn("<title>%s</title>" % title, head)
+        self.assertIn('name="viewport"', head)
+        for tag in ("<!doctype", "<html", "<head", "<body"):
+            self.assertIsNone(re.search(re.escape(tag) + r"[\s>]", html.lower()), "the publisher adds %s" % tag)
+        # only Google Fonts may be loaded from elsewhere; scripts are inline
+        self.assertEqual(re.findall(r'<script[^>]+src=', html), [])
+        for href in re.findall(r'<link[^>]+href="([^"]+)"', html):
+            self.assertTrue(href.startswith("https://fonts.googleapis.com"), href)
+        # light tokens on :root, redefined for both dark routes
+        self.assertIn("@media (prefers-color-scheme: dark)", html)
+        self.assertIn(':root[data-theme="dark"]', html)
+        # charts take colours from tokens, never hard-coded fills
+        for svg in re.findall(r'<svg class="chart".*?</svg>', html, re.S):
+            self.assertIsNone(re.search(r'(fill|stroke)="#', svg), "hard-coded colour in a chart")
+        self.assertIn(ik.esc(ik.REPORT_DISCLAIMER), html)  # the full disclaimer, word for word
+        return html
+
+    def test_the_judge(self):
+        with Offline():
+            d = os.environ["INVESTOR_DIR"]
+            self.assertEqual(run(sc.main, ["NVDA", "--no-text", "--no-news"])[0], 0)
+            html = self.check_page(os.path.join(d, "reports", "NVDA-scorecard.html"), "NVDA Scorecard")
+            self.assertIn("SCORE / 100", html)
+            self.assertIn("data-tip=", html)  # the P/E history chart has hover details
+
+    def test_standalone_svg_keeps_its_dark_style(self):
+        with Offline():
+            d = os.environ["INVESTOR_DIR"]
+            run(sc.main, ["NVDA", "--no-text", "--no-news"])
+            with open(os.path.join(d, "charts", "NVDA-scorecard.svg"), encoding="utf-8") as f:
+                svg = f.read()
+        self.assertTrue(svg.startswith("<svg xmlns"))
+        self.assertIn('<rect class="bg"', svg)
+
+    def test_report_text_is_escaped(self):
+        page = ik.report_page("T", ["X"], "<b>bold</b>", "ok", "")
+        self.assertIn("&lt;b&gt;bold&lt;/b&gt;", page)
+
+
+if __name__ == "__main__":
+    unittest.main()

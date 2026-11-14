@@ -1,0 +1,13 @@
+{
+  "name": "juice-terminal-skills",
+  "owner": {
+    "name": "Juice Terminal"
+  },
+  "plugins": [
+    {
+      "name": "juice-terminal-skills",
+      "source": "./",
+      "description": "Juice Terminal Investor Skills, Free Edition: The Judge (a sourced 0-100 stock scorecard) and guided setup, built on SEC filings and free market data."
+    }
+  ]
+}
